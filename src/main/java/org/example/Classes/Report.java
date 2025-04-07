@@ -6,7 +6,7 @@ public class Report {
   private String id;
 
   private String description;
-  private HashSet<String> preprocessedDescription; // Unique words only
+  private HashSet<String> preprocessedDescription;
 
   public String getDescription() {
     return description;

@@ -36,14 +36,14 @@ public class CsvReportReader implements ReportReader {
             HashSet<String> processedWords = new HashSet<>(Arrays.asList(words));
             reports.add(new Report(id, rawDescription, processedWords));
           } catch (IllegalArgumentException e) {
-            System.out.println("Некорректный UUID: " + parts[0]);
+            System.out.println("Incorrect UUID: " + parts[0]);
           }
         } else {
-          System.out.println("Некорректный формат строки: " + line);
+          System.out.println("Incorrect format of string: " + line);
         }
       }
     } catch (IOException e) {
-      System.out.println("Ошибка чтения файла: " + e.getMessage());
+      System.out.println("Error during read file: " + e.getMessage());
     }
     return reports;
   }

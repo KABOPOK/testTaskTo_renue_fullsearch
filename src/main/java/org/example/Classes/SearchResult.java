@@ -12,8 +12,6 @@ public class SearchResult {
     this.initTime = initTime;
     this.result = result;
   }
-
-  // Getters and setters
   public long getInitTime() {
     return initTime;
   }
@@ -30,7 +28,6 @@ public class SearchResult {
     this.result = result;
   }
 
-  // Manually convert the object to a JSON string
   public String toJson() {
     StringBuilder sb = new StringBuilder();
     sb.append("{");
@@ -49,12 +46,10 @@ public class SearchResult {
     return sb.toString();
   }
 
-  // Method to print the result to the console
   public void printToConsole() {
     System.out.println(this.toJson());
   }
 
-  // Method to write the result to an output file
   public void writeToFile(String filename) throws IOException {
     try (FileWriter writer = new FileWriter(filename)) {
       writer.write(this.toJson());
@@ -117,4 +112,5 @@ public class SearchResult {
       return sb.toString();
     }
   }
+
 }
