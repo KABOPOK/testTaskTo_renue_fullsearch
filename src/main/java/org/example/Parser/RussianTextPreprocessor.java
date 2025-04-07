@@ -26,12 +26,21 @@ public class RussianTextPreprocessor implements TextPreprocessor {
     for (String word : words) {
       if (word.length() > 3 && !stopWords.contains(word)) {
         if (word.length() > 4) {
-          word = word.substring(0, word.length() - 2);
+          if(isRussianVowel(word.charAt(word.length()-2))){
+            word = word.substring(0, word.length() - 2);
+          }
+          else {
+            word = word.substring(0, word.length() - 1);
+          }
         }
         result.add(word);
       }
     }
     return result.toArray(new String[0]);
+  }
+
+  private boolean isRussianVowel(char c) {
+    return "аеёиоуыэюя".indexOf(c) != -1;
   }
 
 }

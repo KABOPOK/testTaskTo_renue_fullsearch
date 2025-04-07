@@ -32,7 +32,7 @@ public class VectorSearchEngine implements SearchEngine {
 
     // 1. Собираем все уникальные слова
     for (Report report : reports) {
-      allWords.addAll(report.getDescription());
+      allWords.addAll(report.getPreprocessedDescription());
     }
 
     // 2. Назначаем каждому слову уникальный индекс
@@ -45,7 +45,7 @@ public class VectorSearchEngine implements SearchEngine {
     for (Report report : reports) {
       double[] vec = new double[vocabulary.size()];
 
-      for (String word : report.getDescription()) {
+      for (String word : report.getPreprocessedDescription()) {
         Integer i = vocabulary.get(word);
         if (i != null) {
           vec[i] = idf(word); // TF = 1
@@ -60,7 +60,7 @@ public class VectorSearchEngine implements SearchEngine {
   private double idf(String word) {
     int count = 0;
     for (Report report : reports) {
-      if (report.getDescription().contains(word)) {
+      if (report.getPreprocessedDescription().contains(word)) {
         ++count;
       }
     }
@@ -102,16 +102,17 @@ public class VectorSearchEngine implements SearchEngine {
     List<RelevanceRecord> results = new ArrayList<>();
 
     // Compare the query vector with each report vector (cosine similarity)
-    for (Map.Entry<Report, double[]> entry : vectors.entrySet()) {
+    for (Report report : vectors.keySet()) {
+      double[] vec = vectors.get(report);
       double sim = 0.0;
-      double[] vec = entry.getValue();
+
       for (int i = 0; i < vec.length; ++i) {
         sim += vec[i] * queryVec[i];
       }
 
       // If similarity is above the minimum threshold, add to results
       if (sim > minRelevantPercent) {
-        results.add(new RelevanceRecord(entry.getKey(), sim));
+        results.add(new RelevanceRecord(report, sim));
       }
     }
 

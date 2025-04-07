@@ -4,11 +4,22 @@ import java.util.HashSet;
 
 public class Report {
   private String id;
-  private HashSet<String> description; // Unique words only
 
-  public Report(String id, HashSet<String> description) {
+  private String description;
+  private HashSet<String> preprocessedDescription; // Unique words only
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public Report(String id, String description, HashSet<String> preprocessedDescription) {
     this.id = id;
     this.description = description;
+    this.preprocessedDescription = preprocessedDescription;
   }
 
   public String getId() {
@@ -19,11 +30,11 @@ public class Report {
     this.id = id;
   }
 
-  public HashSet<String> getDescription() {
-    return description;
+  public HashSet<String> getPreprocessedDescription() {
+    return preprocessedDescription;
   }
 
-  public void setDescription(HashSet<String> description) {
-    this.description = description;
+  public void setPreprocessedDescription(HashSet<String> preprocessedDescription) {
+    this.preprocessedDescription = preprocessedDescription;
   }
 }

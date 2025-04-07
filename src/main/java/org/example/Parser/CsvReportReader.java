@@ -33,8 +33,8 @@ public class CsvReportReader implements ReportReader {
             String id = parts[0].trim();
             String rawDescription = parts[2].trim();
             String[] words = preprocessor.preprocess(rawDescription);
-            HashSet<String> uniqueWords = new HashSet<>(Arrays.asList(words));
-            reports.add(new Report(id, uniqueWords));
+            HashSet<String> processedWords = new HashSet<>(Arrays.asList(words));
+            reports.add(new Report(id, rawDescription, processedWords));
           } catch (IllegalArgumentException e) {
             System.out.println("Некорректный UUID: " + parts[0]);
           }
