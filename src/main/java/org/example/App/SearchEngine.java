@@ -9,6 +9,6 @@ public interface SearchEngine {
 
   void indexReports(List<Report> reports);
 
-  List<RelevanceRecord> search(String query, int maxResults);
+  List<RelevanceRecord> search(String query, int maxResults, double minRelevancePercent);
 
 }
