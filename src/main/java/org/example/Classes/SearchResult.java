@@ -1,7 +1,5 @@
 package org.example.Classes;
 
-import com.google.gson.Gson;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
@@ -15,7 +13,7 @@ public class SearchResult {
     this.result = result;
   }
 
-  // Getters and setters for initTime and result
+  // Getters and setters
   public long getInitTime() {
     return initTime;
   }
@@ -32,31 +30,49 @@ public class SearchResult {
     this.result = result;
   }
 
-  // Method to print the result to console
+  // Manually convert the object to a JSON string
+  public String toJson() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("{");
+    sb.append("\"initTime\":").append(initTime).append(",");
+    sb.append("\"result\":").append("[");
+    if (result != null && !result.isEmpty()) {
+      for (int i = 0; i < result.size(); i++) {
+        sb.append(result.get(i).toJson());
+        if (i < result.size() - 1) {
+          sb.append(",");
+        }
+      }
+    }
+    sb.append("]");
+    sb.append("}");
+    return sb.toString();
+  }
+
+  // Method to print the result to the console
   public void printToConsole() {
-    Gson gson = new Gson();
-    String json = gson.toJson(this);
-    System.out.println(json);
+    System.out.println(this.toJson());
   }
 
   // Method to write the result to an output file
   public void writeToFile(String filename) throws IOException {
-    Gson gson = new Gson();
     try (FileWriter writer = new FileWriter(filename)) {
-      gson.toJson(this, writer);
+      writer.write(this.toJson());
     }
   }
+
   public static class SearchData {
     private String search;
-    private List<Integer> result;
+    private List<String> result;
     private long time;
 
-    public SearchData(String search, List<Integer> result, long time) {
+    public SearchData(String search, List<String> result, long time) {
       this.search = search;
       this.result = result;
       this.time = time;
     }
 
+    // Getters and setters
     public String getSearch() {
       return search;
     }
@@ -65,11 +81,11 @@ public class SearchResult {
       this.search = search;
     }
 
-    public List<Integer> getResult() {
+    public List<String> getResult() {
       return result;
     }
 
-    public void setResult(List<Integer> result) {
+    public void setResult(List<String> result) {
       this.result = result;
     }
 
@@ -80,6 +96,25 @@ public class SearchResult {
     public void setTime(long time) {
       this.time = time;
     }
+
+    // Manually convert the SearchData object to a JSON string
+    public String toJson() {
+      StringBuilder sb = new StringBuilder();
+      sb.append("{");
+      sb.append("\"search\":").append("\"").append(search).append("\"").append(",");
+      sb.append("\"result\":").append("[");
+      if (result != null && !result.isEmpty()) {
+        for (int i = 0; i < result.size(); i++) {
+          sb.append("\"").append(result.get(i)).append("\"");  // Add quotes around UUID
+          if (i < result.size() - 1) {
+            sb.append(",");
+          }
+        }
+      }
+      sb.append("]").append(",");
+      sb.append("\"time\":").append(time);
+      sb.append("}");
+      return sb.toString();
+    }
   }
 }
-
